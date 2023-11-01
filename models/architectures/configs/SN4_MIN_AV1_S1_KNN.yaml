@@ -1,0 +1,103 @@
+ARCH: SN_X
+AUGMENTOR:
+  AUGMENTATION:
+  - ARGS:
+    - 84
+    NAME: RANDOM_CROP
+  - ARGS:
+      brightness: 0.4
+      contrast: 0.4
+      saturation: 0.4
+    NAME: COLOR_JITTER
+  - ARGS: []
+    NAME: RANDOM_HORIZONTAL_FLIP
+  AUG_NUM: 3
+  QAV_NUM: 1
+  DISABLE: []
+  POST_PROCESS:
+  - ARGS:
+      size:
+      - 84
+      - 84
+    NAME: RESIZE
+  - ARGS: []
+    NAME: TO_TENSOR
+  - ARGS:
+      mean:
+      - 0.5
+      - 0.5
+      - 0.5
+      std:
+      - 0.5
+      - 0.5
+      - 0.5
+    NAME: NORMALIZE
+  PRE_PROCESS:
+  - ARGS:
+      size:
+      - 100
+      - 100
+    NAME: RESIZE
+  RANDOM_AUGMENT: false
+  STRATEGY: N:1
+BACKBONE:
+  BETA_ONE:
+  - 0.5
+  - 0.9
+  CUDA: true
+  FREEZE_EPOCH: 1
+  OPTIMIZER: SGD
+  GRAD: true
+  INIT_WEIGHTS: normal
+  LEARNING_RATE: 0.05
+  MODE: TRAIN
+  NAME: SN4_CNN2d_KNN
+  NORM: batch
+BUILDER_TYPE: npair_mc
+DATASET_DIR: ../dataset/miniImageNet
+DE:
+  CUDA: true
+  DATASET: null
+  ENGINE: TREE
+  EPISODE_TRAIN_NUM: 10000
+  GRAD: false
+  MODE: TRAIN
+  MODEL_NAME: __ignore__
+  NAME: RandomForest
+  OPTIMIZATION_ROUNDS: 80
+  OPTIMIZE: true
+  PARAMETERS:
+    eval_metric: mlogloss
+    learning_rate: 0.04
+    max_depth: 11
+    min_child_weight: 3
+    num_class: 5
+    objective: multi:softmax
+    reg_lambda: 1
+    seed: 666
+    subsample: 0.8
+    tree_method: gpu_hist
+
+EPISODE_SIZE: 1
+EPISODE_TEST_NUM: 800
+EPISODE_TRAIN_NUM: 10000
+EPISODE_VAL_NUM: 1000
+EPOCHS: 30
+K_NEIGHBORS: 3
+MODE: train
+NAME: DN4
+NGPU: 1
+OUTF: ../results/
+PRINT_FREQ: 100
+QUERY_NUM: 15
+REFIT_DENGINE: false
+RESUME:
+SHOT_NUM: 1
+TEST_EPISODE_SIZE: 1
+TOPOLOGY:
+  BACKBONE: BACKBONE_2D
+TRACK_CRITERION: BACKBONE
+TRACK_LOSS: BACKBONE
+USE_BIAS: true
+WAY_NUM: 5
+WORKERS: 8

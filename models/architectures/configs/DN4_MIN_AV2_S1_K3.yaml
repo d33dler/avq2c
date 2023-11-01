@@ -1,0 +1,111 @@
+# Main params
+NAME: DN4
+ARCH: "DN_X"
+K_NEIGHBORS: 3
+USE_BIAS: True
+
+#Model skeleton
+TOPOLOGY: { # mapping = K (interface forced module IDs) : V (your own checkpoint modules IDs)
+  BACKBONE: 'BACKBONE_2D',
+}
+TRACK_LOSS: BACKBONE
+TRACK_CRITERION: BACKBONE
+
+# Args
+
+
+REFIT_DENGINE: False
+DATASET_DIR: ../dataset/miniImageNet
+MODE: train
+RESUME: 
+NGPU: 1
+PRINT_FREQ: 100
+EPOCHS: 30
+
+# Dataloader
+OUTF: '../results/'
+WORKERS: 8
+EPISODE_SIZE: 1
+TEST_EPISODE_SIZE: 1
+EPISODE_TRAIN_NUM: 10000
+EPISODE_VAL_NUM: 1000
+EPISODE_TEST_NUM: 800
+WAY_NUM: 5
+SHOT_NUM: 1
+QUERY_NUM: 15
+
+BACKBONE:
+  NAME: DN4_CNN2d # DN4_CNN2d | ResNet2d
+  MODE: TRAIN
+  GRAD: True
+  NORM: batch
+  CUDA: True
+  LEARNING_RATE: 0.05
+  BETA_ONE: [ 0.5,0.9 ]
+  INIT_WEIGHTS: normal
+  FREEZE_EPOCH: 1
+  OPTIMIZER: SGD
+
+DE:
+  NAME: RandomForest # XGB | RandomForest
+  ENGINE: TREE
+  MODE: TRAIN
+  GRAD: False
+  CUDA: True
+  MODEL_NAME: __ignore__
+  OPTIMIZE: True
+  OPTIMIZATION_ROUNDS: 80
+  DATASET:
+  EPISODE_TRAIN_NUM: 10000
+  PARAMETERS: { tree_method: gpu_hist,
+                num_class: 5,
+                objective: 'multi:softmax',
+                eval_metric: 'mlogloss',
+                max_depth: 11,
+                min_child_weight: 3,
+                learning_rate: 0.04,
+                subsample: 0.8,
+                seed: 666,
+                reg_lambda: 1,
+  } # add parameters here to override default settings
+
+AUGMENTOR:
+  DISABLE: [ ]
+  QAV_NUM: 2 # number of augmented views
+  AUG_NUM: 3 # number of randomly selected augmentations per view
+  SAV_NUM: 4
+  STRATEGY: 'N:1'
+  RANDOM_AUGMENT: False # whether to use random combinations of augmentations
+  PRE_PROCESS: [
+    {
+      NAME: RESIZE,
+      ARGS: { size: [ 100,100 ] },
+    }
+  ]
+  AUGMENTATION:
+    [
+      { NAME: RANDOM_CROP,
+        ARGS: [ 84 ]
+      },
+      { NAME: COLOR_JITTER,
+        ARGS: { brightness: 0.4, contrast: 0.4, saturation: 0.4 },
+      },
+      { NAME: RANDOM_HORIZONTAL_FLIP,
+        ARGS: [ ],
+      }
+    ]
+  POST_PROCESS: [
+    {
+      NAME: RESIZE,
+      ARGS: { size: [ 84,84 ] },
+    },
+    {
+      NAME: TO_TENSOR,
+      ARGS: [ ],
+    },
+    {
+      NAME: NORMALIZE,
+      ARGS: { mean: [ 0.5, 0.5, 0.5 ], std: [ 0.5, 0.5, 0.5 ] },
+    }
+  ]
+

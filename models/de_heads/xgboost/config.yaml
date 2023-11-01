@@ -1,0 +1,21 @@
+TYPE: CLASSIFIER # REGRESSOR | CLASSIFIER
+MODEL_NAME: __ignore__
+OPTIMIZE: False
+ENGINE: TREE
+GRAD: False
+OPTIMIZATION_ROUNDS: 150
+
+PARAMETERS: {
+  tree_method: gpu_hist,
+  objective: 'multi:softmax',
+  eval_metric: 'mlogloss',
+  max_depth: 9,
+  min_child_weight: 3,
+  gamma: 5,
+  eta: 0.01,
+  learning_rate: 0.04,
+  subsample: 1,
+  seed: 666,
+  lambda: 1,
+  colsample_bytree: 0.9
+}

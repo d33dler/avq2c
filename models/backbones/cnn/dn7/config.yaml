@@ -1,0 +1,20 @@
+INP_CHANNELS: [ 3, 64,64,64 ]  #TODO finish CNN build abstraction
+OUT_CHANNELS: [ 64,64,64,64 ]
+KERNEL_SIZES: [ 3,3,3,3 ]
+LAYER_STRIDES: [ 1,1,1,1 ]
+LAYER_PADDINGS: [ 1,1,1,1 ]
+LAYER_POOLS: [ 1,1,0,0 ]
+NUM_FILTERS: []
+MOMENTUM: []
+
+UPSAMPLE_STRIDES: [ 1 ]  # []
+NUM_UPSAMPLE_FILTERS: [ 1 ]  # []
+
+ACTIVATION: Relu
+NORMALIZATION: BatchNorm2d
+POOLING: MaxPool2d
+
+NORM_ARGS: { } # for now only one set of parameters
+POOL_ARGS: { }
+DEBLOCK_ARGS: { }
+FILE_TYPE: YAML

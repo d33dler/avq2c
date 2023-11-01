@@ -1,0 +1,74 @@
+ARCH: DN_X
+AUGMENTOR:
+  AGGREGATION: gmean
+  AUGMENTATION:
+  - ARGS: []
+    NAME: AUTO_AUGMENT
+  AUG_NUM: 1
+  DISABLE: []
+  POST_PROCESS:
+  - ARGS:
+      size:
+      - 84
+      - 84
+    NAME: RESIZE
+  - ARGS: []
+    NAME: TO_TENSOR
+  - ARGS:
+      mean:
+      - 0.5
+      - 0.5
+      - 0.5
+      std:
+      - 0.5
+      - 0.5
+      - 0.5
+    NAME: NORMALIZE
+  PRE_PROCESS:
+  - ARGS:
+      size:
+      - 100
+      - 100
+    NAME: RESIZE
+  QAV_NUM: 2
+  RANDOM_AUGMENT: false
+  SAV_NUM: 1
+  STRATEGY: N:1
+  USE_IDENTITY: false
+BACKBONE:
+  BETA_ONE:
+  - 0.5
+  - 0.9
+  CUDA: true
+  FREEZE_EPOCH: 30
+  GRAD: true
+  INIT_WEIGHTS: normal
+  LEARNING_RATE: 0.01
+  MODE: TRAIN
+  NAME: DN4_CNN2d
+  NORM: batch
+  OPTIMIZER: SGD
+DATASET_DIR: ../dataset/StanfordDogs
+
+EPISODE_SIZE: 1
+EPISODE_TEST_NUM: 600
+EPISODE_TRAIN_NUM: 10000
+EPISODE_VAL_NUM: 600
+EPOCHS: 30
+K_NEIGHBORS: 1
+MODE: train
+NAME: DN4
+NGPU: 1
+OUTF: ../results/
+PRINT_FREQ: 100
+QUERY_NUM: 15
+RESUME:
+SHOT_NUM: 1
+TEST_EPISODE_SIZE: 1
+TOPOLOGY:
+  BACKBONE: BACKBONE_2D
+TRACK_CRITERION: BACKBONE
+TRACK_LOSS: BACKBONE
+USE_BIAS: true
+WAY_NUM: 5
+WORKERS: 8

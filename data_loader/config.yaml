@@ -1,0 +1,44 @@
+# NOTE: This configuration can be overwritten from the model root config
+AUGMENTOR:
+  DISABLE: [ ]
+  QAV_NUM: 4 # number of augmented views
+  AUG_NUM: 1 # number of randomly selected augmentations per view
+  STRATEGY: "1:1"  #'1:1' = 1 AV vs 1 support class AV-subset, '1:N' - 1 query-AV vs all samples of a support class
+  RANDOM_AUGMENT: True # whether to use random combinations of augmentations
+  PRE_PROCESS: [
+    {
+      NAME: RESIZE,
+      ARGS: { size: [ 100,100 ] },
+    },
+
+  ]
+  AUGMENTATION:
+
+    [
+      { NAME: RANDOM_CROP,
+        ARGS: [ 84 ]
+      },
+      { NAME: COLOR_JITTER,
+        ARGS: { brightness: 0.4, contrast: 0.4, saturation: 0.4 },
+      },
+      { NAME: RANDOM_HORIZONTAL_FLIP,
+        ARGS: [ ],
+      },
+      { NAME: RANDOM_VERTICAL_FLIP,
+        ARGS: [ ],
+      }
+    ]
+  POST_PROCESS: [
+    {
+      NAME: RESIZE,
+      ARGS: { size: [ 84,84 ] },
+    },
+    {
+      NAME: TO_TENSOR,
+      ARGS: [ ],
+    },
+    {
+      NAME: NORMALIZE,
+      ARGS: { mean: [ 0.5, 0.5, 0.5 ], std: [ 0.5, 0.5, 0.5 ] },
+    }
+  ]

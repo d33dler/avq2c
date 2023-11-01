@@ -1,0 +1,152 @@
+# ARCH specifies the architecture name or identifier (currently DN_X and SN_X are supported)
+ARCH: DN_X
+
+# AUGMENTOR contains configurations related to data augmentation.
+AUGMENTOR:
+  # AGGREGATION defines the method used for aggregating results. Example: geometric mean (gmean).
+  AGGREGATION: gmean
+
+  # AUGMENTATION is a list of augmentation techniques applied to the data.
+  AUGMENTATION:
+    # Each item in the list is a dictionary specifying an augmentation technique.
+    - ARGS: # Arguments or parameters for the augmentation technique.
+        - 84
+      NAME: RANDOM_CROP # Name of the augmentation technique.
+    - ARGS: # Arguments or parameters for the augmentation technique.
+        brightness: 0.4
+        contrast: 0.4
+        saturation: 0.4
+      NAME: COLOR_JITTER # Name of the augmentation technique.
+    - ARGS: [] # This augmentation technique takes no arguments.
+      NAME: RANDOM_HORIZONTAL_FLIP # Name of the augmentation technique.
+
+  # AUG_NUM specifies the number of augmentations to apply.
+  AUG_NUM: 3
+
+  # DISABLE is a list of augmentations to disable.
+  DISABLE: []
+
+  # POST_PROCESS is a list of post-processing steps applied to the data.
+  POST_PROCESS:
+    - ARGS: # Arguments or parameters for the post-processing step.
+        size:
+          - 84
+          - 84
+      NAME: RESIZE # Name of the post-processing step.
+    - ARGS: [] # This post-processing step takes no arguments.
+      NAME: TO_TENSOR # Name of the post-processing step.
+    - ARGS: # Arguments or parameters for the post-processing step.
+        mean:
+          - 0.5
+          - 0.5
+          - 0.5
+        std:
+          - 0.5
+          - 0.5
+          - 0.5
+      NAME: NORMALIZE # Name of the post-processing step.
+
+  # PRE_PROCESS is a list of pre-processing steps applied to the data.
+  PRE_PROCESS:
+    - ARGS: # Arguments or parameters for the pre-processing step.
+        size:
+          - 100
+          - 100
+      NAME: RESIZE # Name of the pre-processing step.
+
+  # QAV_NUM specifies the number of query augmentations.
+  QAV_NUM: 1
+
+  # RANDOM_AUGMENT is a boolean indicating whether to apply random augmentations.
+  RANDOM_AUGMENT: false
+
+  # SAV_NUM specifies the number of support augmentations.
+  SAV_NUM: 1
+
+  # STRATEGY defines the strategy used for augmentation. Example: N:1 means N augmentations for 1 input.
+  STRATEGY: N:1
+
+  # USE_IDENTITY is a boolean indicating whether to use identity mapping.
+  USE_IDENTITY: false
+
+# BACKBONE contains configurations related to the neural network backbone.
+BACKBONE:
+  BETA_ONE: # Beta1 parameter for the optimizer, often used in Adam optimizer.
+    - 0.5
+    - 0.9
+  CUDA: true # Indicates whether to use CUDA (GPU acceleration).
+  FREEZE_EPOCH: 30 # Number of epochs to freeze certain layers for training.
+  GRAD: true # Indicates whether to calculate gradients.
+  INIT_WEIGHTS: normal # Method used for initializing weights.
+  LEARNING_RATE: 0.01 # Learning rate for the optimizer.
+  MODE: TRAIN # Mode of operation, e.g., TRAIN, TEST.
+  NAME: DN4_CNN2d # Name or identifier of the backbone.
+  NORM: batch # Type of normalization used.
+  OPTIMIZER: SGD # Optimizer used for training.
+
+# DATASET_DIR specifies the directory path to the dataset.
+DATASET_DIR: ../dataset/datasetDir..
+
+# EPISODE_SIZE specifies the size of each training episode (batch size).
+EPISODE_SIZE: 1
+
+# EPISODE_TEST_NUM specifies the number of test episodes.
+EPISODE_TEST_NUM: 600
+
+# EPISODE_TRAIN_NUM specifies the number of training episodes.
+EPISODE_TRAIN_NUM: 10000
+
+# EPISODE_VAL_NUM specifies the number of validation episodes.
+EPISODE_VAL_NUM: 600
+
+# EPOCHS specifies the total number of training epochs.
+EPOCHS: 30
+
+# K_NEIGHBORS specifies the number of neighbors to consider in K-Nearest Neighbors algorithm.
+K_NEIGHBORS: 1
+
+# MODE specifies the mode of operation, e.g., train, val, test.
+MODE: train
+
+# NAME specifies the name or identifier of the configuration or experiment.
+NAME: DN4
+
+# NGPU specifies the number of GPUs to use.
+NGPU: 1
+
+# OUTF specifies the output directory for results.
+OUTF: ../results/
+
+# PRINT_FREQ specifies the frequency of printing log messages.
+PRINT_FREQ: 100
+
+# QUERY_NUM specifies the number of query samples per episode.
+QUERY_NUM: 15
+
+# RESUME specifies the file path to resume training from a checkpoint.
+RESUME: ../path/to/checkpoint.pth.tar
+
+# SHOT_NUM specifies the number of shots (samples per class) in few-shot learning.
+SHOT_NUM: 1
+
+# TEST_EPISODE_SIZE specifies the size of each test episode.
+TEST_EPISODE_SIZE: 1
+
+# TOPOLOGY contains configurations related to the network topology.
+TOPOLOGY:
+  BACKBONE: BACKBONE_2D # Specifies the backbone topology.
+
+# TRACK_CRITERION (ignore)
+TRACK_CRITERION: BACKBONE
+
+# TRACK_LOSS specifies the module for which to calculate loss.
+TRACK_LOSS: BACKBONE
+
+# USE_BIAS is a boolean indicating whether to use bias in the neural network layers (global).
+USE_BIAS: true
+
+# WAY_NUM specifies the number of ways in few-shot learning (number of classes).
+WAY_NUM: 5
+
+# WORKERS specifies the number of worker threads used for data loading.
+WORKERS: 8
