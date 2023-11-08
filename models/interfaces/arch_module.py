@@ -21,7 +21,6 @@ from models import backbones
 from models.utilities.utils import save_checkpoint, load_config, accuracy, config_exchange, DataHolder
 
 
-# noinspection PyUnresolvedReferences
 class ARCH(nn.Module):
     """
     Module architecture class - wraps around nn.Module and organizes necessary functions/variables and provides necessary

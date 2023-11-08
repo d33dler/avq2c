@@ -1,6 +1,6 @@
 # Improving Few-shot learning for Image Classification using data augmentation and aggregation
 
-This project for the BSc Thesis explores and seeks to improve the findings from the paper [Revisiting Local Descriptor based Image-to-Class Measure for Few-shot Learning](http://cs.nju.edu.cn/rl/people/liwb/CVPR19.pdf) by Wenbin Li, Lei Wang, Jinglin Xu, Jing Huo, Yang Gao and Jiebo Luo. In CVPR 2019.
+This is a BSc Thesis that explores and seeks to improve the findings from the paper [Revisiting Local Descriptor based Image-to-Class Measure for Few-shot Learning](http://cs.nju.edu.cn/rl/people/liwb/CVPR19.pdf) by Wenbin Li, Lei Wang, Jinglin Xu, Jing Huo, Yang Gao and Jiebo Luo. In CVPR 2019.
 
 
 
@@ -8,7 +8,7 @@ This project for the BSc Thesis explores and seeks to improve the findings from 
 - Unix system
 - Python 3.8 - 3.10
 - CUDA 10.0 - 12
-- All library dependencies from `requirements.txt` (pip environment recommended)
+- All library dependencies from `requirements.txt` (pip virtual environment recommended)
 
 
 ## Getting Started
@@ -36,11 +36,13 @@ Refer to ```models/architectures/config_blueprints/CONFIG_DOCUMENTATION``` for t
 
 **You may also re-use config samples from ```models/architectures/config_blueprints/``` to reproduce the results in the paper.** 
 ### Training & testing
-
-- Train a model based on Conv64F:
-    Usage:
+We run the script from the _exec_ directory of the project.
+```bash
+cd executables
+```
+- Run
     ------
-    `python script_name.py [--jobs JOB [JOB ...]] [--jobfile JOBFILE] [--job_id JOB_ID] [--test]`
+    `python execute.py [--jobs JOB [JOB ...]] [--jobfile JOBFILE] [--job_id JOB_ID] [--test]`
 
     ###  Options:
     - `jobs JOB [JOB ...]`
